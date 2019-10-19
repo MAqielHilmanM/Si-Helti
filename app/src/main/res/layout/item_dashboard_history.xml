@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@android:color/white">
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+                android:id="@+id/image_icon"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_margin="8dp"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_doctor_tools_blue"
+                android:scaleType="centerCrop"
+        />
+        <TextView
+                android:id="@+id/tv_history_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diagnose date"
+                android:textSize="12sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/image_icon"
+        />
+        <TextView
+                android:id="@+id/tv_history_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="19/10/2011 10:10 PM"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimaryDark"
+                android:layout_marginRight="8dp"
+                android:layout_below="@id/tv_history_title"
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_toRightOf="@id/image_icon"
+                android:layout_marginBottom="8dp"
+        />
+        <Button
+                android:id="@+id/btn_history_detail"
+                android:layout_width="77dp"
+                android:layout_height="26dp"
+                android:background="@drawable/btn_appoinment"
+                android:text="See Detail"
+                android:textSize="10sp"
+                android:textColor="@android:color/white"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+        />
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

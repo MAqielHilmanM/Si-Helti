@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
+    <TextView
+            android:id="@+id/tv_dashboard_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:textSize="14sp"
+            android:textColor="@android:color/black"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"/>
+    <TextView
+            android:id="@+id/tv_dashboard_item_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The information based on your location"
+            android:textSize="12sp"
+            android:layout_below="@id/tv_dashboard_item_title"
+            android:layout_marginTop="8dp"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"/>
+    <TextView
+            android:id="@+id/tv_dashboard_item_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Show All"
+            android:textSize="12sp"
+            android:textColor="@android:color/black"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
+    <Space
+            android:id="@+id/spacer"
+            android:layout_width="@dimen/activity_horizontal_margin"
+            android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_dashboard"
+            android:layout_marginTop="8dp"
+            android:layout_toRightOf="@id/spacer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_dashboard_item_subtitle"/>
+    <TextView
+            android:id="@+id/tv_empty"
+            android:visibility="gone"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:drawablePadding="8dp"
+            android:drawableTop="@drawable/ic_empty"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="8dp"
+            android:layout_below="@id/tv_dashboard_item_subtitle"
+            android:text="You haven’t diagnosis history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    <Button
+            android:id="@+id/btn_show_maps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_appoinment"
+            android:text="Show in maps"
+            android:textColor="@android:color/white"
+            android:layout_below="@id/rv_dashboard"
+            android:layout_marginTop="16dp"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+    />
+</RelativeLayout>
