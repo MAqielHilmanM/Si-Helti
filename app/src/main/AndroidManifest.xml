@@ -21,7 +21,7 @@
         </activity>
         <activity
                 android:name=".screens.appoinment.form.AppoinmentFormActivity"
-                android:theme="@style/Theme.AppCompat.Light.Dialog">
+                android:theme="@style/ActivityDialogTheme">
         </activity>
         <activity android:name=".screens.diagnosa.form.DiagnosaFormActivity">
         </activity>

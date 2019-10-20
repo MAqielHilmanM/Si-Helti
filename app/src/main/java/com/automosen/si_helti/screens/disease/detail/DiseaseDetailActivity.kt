@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.automosen.si_helti.R
 import com.automosen.si_helti.base.BaseActivity
+import com.automosen.si_helti.screens.diagnosa.form.DiagnosaFormActivity
 import kotlinx.android.synthetic.main.activity_disease_detail.*
 
 class DiseaseDetailActivity : BaseActivity() {
@@ -22,7 +23,9 @@ class DiseaseDetailActivity : BaseActivity() {
     }
 
     override fun initListener() {
-
+        btn_sheet_diagnose.setOnClickListener {
+            DiagnosaFormActivity.startActivity(this)
+        }
     }
 
     override fun setView(): Int {
@@ -42,9 +45,9 @@ class DiseaseDetailActivity : BaseActivity() {
     }
 
     private fun initDummy() {
-        listData.add("")
-        listData.add("")
-        listData.add("")
+        listData.add("high fever")
+        listData.add("headache")
+        listData.add("nausea")
         recyclerView.adapter?.notifyDataSetChanged()
     }
 

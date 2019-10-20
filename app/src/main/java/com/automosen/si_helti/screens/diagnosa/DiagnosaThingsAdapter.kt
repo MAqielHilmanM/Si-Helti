@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.automosen.si_helti.R
+import kotlinx.android.synthetic.main.item_diagnosa_things_point.view.*
 
 class DiagnosaThingsAdapter(private val children : List<String>)
     : RecyclerView.Adapter<DiagnosaThingsAdapter.ViewHolder>(){
@@ -27,13 +28,13 @@ class DiagnosaThingsAdapter(private val children : List<String>)
         val child = children[position]
 
         holder.initData(child)
-        holder.initListener(context,child)
     }
 
 
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         fun initData(child : String){
             // TODO : Initiate Variable Here
+            itemView.tv_things_title.text = child
         }
 
         fun initListener(context : Context, child : String){

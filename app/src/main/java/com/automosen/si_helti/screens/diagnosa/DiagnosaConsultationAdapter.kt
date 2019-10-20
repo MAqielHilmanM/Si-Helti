@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.automosen.si_helti.R
 import com.automosen.si_helti.model.Hospital
 import com.automosen.si_helti.screens.appoinment.form.AppoinmentFormActivity
+import kotlinx.android.synthetic.main.item_diagnosa_consultation_hospital.view.*
 
 class DiagnosaConsultationAdapter(private val children : List<Hospital>)
     : RecyclerView.Adapter<DiagnosaConsultationAdapter.ViewHolder>(){
@@ -36,13 +37,14 @@ class DiagnosaConsultationAdapter(private val children : List<Hospital>)
     inner class ViewHolder(itemView : View) : RecyclerView.ViewHolder(itemView){
         fun initData(child : Hospital){
             // TODO : Initiate Variable Here
+            itemView.tv_hospital_location.text = child.name
         }
 
         fun initListener(context : Context, child : Hospital){
             // TODO : Initiate Listener Here
             itemView.setOnClickListener{
                 // TODO : Do Something after item click
-                AppoinmentFormActivity.startActivity(context)
+                AppoinmentFormActivity.startActivity(context,child)
             }
         }
     }

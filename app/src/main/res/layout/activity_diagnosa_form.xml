@@ -50,7 +50,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:text="Select where the pain that you feel ?"
+                    android:text="Where the pain that you feel ?"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="@id/guide_left"/>
             <EditText
@@ -81,6 +81,7 @@
                     android:padding="8dp"
                     android:inputType="textMultiLine"
                     android:lines="5"
+                    android:gravity="top"
                     app:layout_constraintTop_toBottomOf="@id/tv_diagnosis_desc_label"
                     android:layout_marginTop="16dp"
             />
@@ -100,7 +101,7 @@
                     app:layout_constraintRight_toRightOf="@id/guide_right"
                     android:background="@drawable/form_edittext_background"
                     android:padding="8dp"
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     app:layout_constraintTop_toBottomOf="@id/tv_diagnosis_long_label"
                     android:layout_marginTop="16dp"
             />
@@ -116,14 +117,14 @@
                     android:id="@+id/seekbar_diagnosis_scale_value"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/form_edittext_background"
                     android:padding="8dp"
                     android:layout_marginTop="16dp"
-                    app:isb_progress="10"
+                    app:isb_progress="0"
                     app:isb_show_tick_marks_type="divider"
                     app:isb_thumb_color="@color/colorPrimaryDark"
                     app:isb_tick_marks_color="@color/colorPrimary"
-                    app:isb_ticks_count="10"
+                    app:isb_ticks_count="11"
+                    app:isb_show_tick_texts="true"
                     app:layout_constraintTop_toBottomOf="@id/tv_diagnosis_scale_label"
                     app:layout_constraintLeft_toLeftOf="@id/guide_left"
                     app:layout_constraintRight_toRightOf="@id/guide_right"

@@ -21,6 +21,8 @@ import com.automosen.si_helti.network.ApiService
 import com.automosen.si_helti.network.dao.MalariaDao
 import com.automosen.si_helti.screens.diagnosa.form.DiagnosaFormActivity
 import com.automosen.si_helti.screens.disease.DiseaseActivity
+import com.automosen.si_helti.utils.PreferenceUtils
+import com.automosen.si_helti.utils.Tools
 import kotlinx.android.synthetic.main.fragment_dashboard.view.*
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -34,9 +36,8 @@ import kotlin.math.log
 
 
 class DashboardFragment : BaseFragment() {
-
     private lateinit var fusedLocationClient: FusedLocationProviderClient
-    private lateinit var mMyLatLang: LatLng
+    private var mMyLatLang: LatLng? = null
     val listDiseases : ArrayList<Disease> = arrayListOf()
     val listHistory : ArrayList<History> = arrayListOf()
 
@@ -75,9 +76,9 @@ class DashboardFragment : BaseFragment() {
             fusedLocationClient.lastLocation
                 .addOnSuccessListener { location : Location? ->
                     if(location!=null)
-                        mMyLatLang = LatLng(location.latitude,location.latitude)
+                        mMyLatLang = LatLng(location.latitude,location.longitude)
                 }
-//            loadData()
+            loadData()
         }else
             EasyPermissions.requestPermissions(
                 this, "Need location for detect any disease on your area",
@@ -104,7 +105,7 @@ class DashboardFragment : BaseFragment() {
 
     private fun initDummy() {
 
-        listDiseases.add(Disease(""))
+//        listDiseases.add(Disease(""))
 //        listDiseases.add(Disease(""))
 //        listDiseases.add(Disease(""))
 //
@@ -112,17 +113,39 @@ class DashboardFragment : BaseFragment() {
 //        listHistory.add(History(""))
 //        listHistory.add(History(""))
 
+        val sp = PreferenceUtils(activity!!)
+        val lastData = sp.get(String::class,"lastResult","") as String
+        if(lastData.isNotEmpty()){
+            listHistory.add(History(""))
+        }
+
         listData.add(Dashboard(DashboardType.Disease,"Disease information", listDiseases))
         listData.add(Dashboard(DashboardType.History,"Your Diagnosis History ", listHistory))
         recyclerView.adapter?.notifyDataSetChanged()
     }
 
+    override fun onResume() {
+        super.onResume()
+        if(mMyLatLang != null) loadData()
+
+        val sp = PreferenceUtils(activity!!)
+        val lastData = sp.get(String::class,"lastResult","") as String
+        if(lastData.isNotEmpty()){
+            listHistory.clear()
+            listHistory.add(History(""))
+            recyclerView.adapter?.notifyDataSetChanged()
+        }
+
+    }
+
     fun loadData(){
+        val pb = Tools.showProgressDialog(activity!!)
         val mApiInterface = ApiClient.instance().getClient(ApiService.base_url)?.create(ApiInterface::class.java)
         val callMalaria = mApiInterface?.getMalariaInformation()
         callMalaria?.enqueue(object : Callback<List<MalariaDao>>{
             override fun onFailure(call: Call<List<MalariaDao>>, t: Throwable) {
                 Log.e("Error",t.message)
+                pb.dismiss()
             }
 
             override fun onResponse(call: Call<List<MalariaDao>>, response: Response<List<MalariaDao>>) {
@@ -134,6 +157,7 @@ class DashboardFragment : BaseFragment() {
                 }
                 Log.d("Disease","list disease = ${listDiseases.size}")
                 recyclerView.adapter?.notifyDataSetChanged()
+                pb.dismiss()
             }
 
         })
@@ -144,12 +168,18 @@ class DashboardFragment : BaseFragment() {
         loc1.latitude = latlang.latitude
         loc1.longitude = latlang.longitude
 
+        Log.e("Radius","DataLocation = ${loc1.latitude},${loc1.longitude}")
+
         val loc2 = Location("")
-        loc2.latitude = mMyLatLang.latitude
-        loc2.longitude = mMyLatLang.longitude
+        loc2.latitude = mMyLatLang!!.latitude
+        loc2.longitude = mMyLatLang!!.longitude
+
+        Log.e("Radius","MyLocation = ${loc2.latitude},${loc2.longitude}")
 
         val distance = loc1.distanceTo(loc2)
+        Log.e("Radius","jarak = $distance")
         return distance <= 500
+
     }
 
     companion object {

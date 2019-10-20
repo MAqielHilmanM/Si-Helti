@@ -35,4 +35,8 @@
     </style>
 
     <style name="BottomSheetDialogTheme" parent="BaseBottomSheetDialog" />
+
+    <style name="ActivityDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

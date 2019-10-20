@@ -43,7 +43,7 @@ class DashboardAdapterHistory(private val children : List<History>)
             // TODO : Initiate Listener Here
             itemView.setOnClickListener{
                 // TODO : Do Something after item click
-                DiagnosaActivity.startActivity(context)
+                DiagnosaActivity.startActivity(context,DashboardActivity.toString())
             }
         }
     }

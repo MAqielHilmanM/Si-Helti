@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.automosen.si_helti.R
+import com.automosen.si_helti.screens.diagnosa.form.DiagnosaFormActivity
 import com.automosen.si_helti.screens.disease.detail.DiseaseDetailAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.fragment_disease_detail.view.*
@@ -24,6 +25,10 @@ class DiseaseSheetFragment : BottomSheetDialogFragment() {
 
         initRecycler(v)
         initDummy()
+
+        v.btn_sheet_diagnose.setOnClickListener {
+            DiagnosaFormActivity.startActivity(activity!!)
+        }
         return v
     }
 
@@ -40,9 +45,9 @@ class DiseaseSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun initDummy() {
-        listData.add("")
-        listData.add("")
-        listData.add("")
+        listData.add("high fever")
+        listData.add("headache")
+        listData.add("nausea")
         recyclerView.adapter?.notifyDataSetChanged()
     }
 

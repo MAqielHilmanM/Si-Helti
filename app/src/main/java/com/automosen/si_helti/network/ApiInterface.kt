@@ -1,5 +1,6 @@
 package com.automosen.si_helti.network
 
+import com.automosen.si_helti.network.dao.HospitalDao
 import com.automosen.si_helti.network.dao.MalariaDao
 import retrofit2.Call
 import retrofit2.http.GET
@@ -60,4 +61,7 @@ interface ApiInterface {
 
     @GET("/sihelti/index.php/malaria")
     fun getMalariaInformation(): Call<List<MalariaDao>>
+
+    @GET("/sihelti/index.php/RumahSakit")
+    fun getHospitalInformation(): Call<List<HospitalDao>>
 }

@@ -9,6 +9,7 @@ import androidx.appcompat.widget.Toolbar
 import com.automosen.si_helti.R
 import com.automosen.si_helti.base.BaseActivity
 import com.automosen.si_helti.screens.dashboard.DashboardActivity
+import com.automosen.si_helti.utils.PreferenceUtils
 import com.automosen.si_helti.utils.Tools
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -32,7 +33,8 @@ class LoginActivity : BaseActivity() {
                 Handler().postDelayed(
                     {
                         pd.dismiss()
-
+                        val sp = PreferenceUtils(this)
+                        sp.set("userId",et_login_username.text.toString())
                         DashboardActivity.startActivity(this)
                         finish()
                     },

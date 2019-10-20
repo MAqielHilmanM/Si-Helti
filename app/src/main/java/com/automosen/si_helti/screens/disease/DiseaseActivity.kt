@@ -7,10 +7,16 @@ import android.content.Intent
 import android.graphics.Color
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.automosen.si_helti.model.Disease
+import com.automosen.si_helti.network.ApiClient
+import com.automosen.si_helti.network.ApiInterface
+import com.automosen.si_helti.network.ApiService
+import com.automosen.si_helti.network.dao.MalariaDao
+import com.automosen.si_helti.utils.Tools
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,9 +25,13 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CircleOptions
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.fragment_disease_sheet.*
 import pub.devrel.easypermissions.AfterPermissionGranted
 import pub.devrel.easypermissions.EasyPermissions
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class DiseaseActivity : AppCompatActivity(), OnMapReadyCallback {
@@ -60,8 +70,6 @@ class DiseaseActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun initDummy() {
         listData.add(Disease(""))
-        listData.add(Disease(""))
-        listData.add(Disease(""))
         recyclerView.adapter?.notifyDataSetChanged()
     }
 
@@ -78,8 +86,10 @@ class DiseaseActivity : AppCompatActivity(), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+        mMap.isMyLocationEnabled = true
 
         loadCurrentLocation()
+        loadData()
     }
 
     @SuppressLint("MissingPermission")
@@ -91,6 +101,7 @@ class DiseaseActivity : AppCompatActivity(), OnMapReadyCallback {
                     if (location != null) {
                         val latLng = LatLng(location.latitude, location.longitude)
                         val cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15f)
+                        mMap.addMarker(MarkerOptions().position(LatLng(latLng.longitude+0.01,latLng.longitude+0.01)).title("Malaria"))
                         mMap.animateCamera(cameraUpdate)
 
                         for (i in 0..4) {
@@ -116,6 +127,31 @@ class DiseaseActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+
+
+    fun loadData(){
+        val pb = Tools.showProgressDialog(this)
+        val mApiInterface = ApiClient.instance().getClient(ApiService.base_url)?.create(ApiInterface::class.java)
+        val callMalaria = mApiInterface?.getMalariaInformation()
+        callMalaria?.enqueue(object : Callback<List<MalariaDao>> {
+            override fun onFailure(call: Call<List<MalariaDao>>, t: Throwable) {
+                Log.e("Error",t.message)
+                pb.dismiss()
+            }
+
+            override fun onResponse(call: Call<List<MalariaDao>>, response: Response<List<MalariaDao>>) {
+                response.body()?.forEach {
+                    val markerOptions = MarkerOptions()
+                    markerOptions.position(LatLng(it.latitude!!.toDouble(),it.longitude!!.toDouble()))
+                    markerOptions.title("malaria")
+                    mMap.addMarker(markerOptions)
+                }
+                pb.dismiss()
+            }
+
+        })
     }
 
     companion object {
